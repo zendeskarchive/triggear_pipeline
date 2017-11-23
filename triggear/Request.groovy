@@ -2,14 +2,14 @@ package com.futuresimple.triggear
 
 import groovy.transform.PackageScope
 
-class Registration {
-    @PackageScope EventType registrationEvent
+class Request {
+    @PackageScope TriggeringEvent registrationEvent
     @PackageScope List<String> labels = []
-    @PackageScope List<RequestParam> requestedParameters = []
+    @PackageScope List<PipelineParameters> requestedParameters = []
     @PackageScope List<String> changeRestrictions = []
     @PackageScope List<String> branchRestrictions = []
 
-    private Registration(EventType type){
+    private Request(TriggeringEvent type){
         registrationEvent = type
     }
 
@@ -26,15 +26,15 @@ class Registration {
     }
 
     private void addBranchAsParameter(){
-        requestedParameters.add(RequestParam.BRANCH)
+        requestedParameters.add(PipelineParameters.BRANCH)
     }
 
     private void addShaAsParameter(){
-        requestedParameters.add(RequestParam.SHA)
+        requestedParameters.add(PipelineParameters.SHA)
     }
 
     private void addTagAsParameter(){
-        requestedParameters.add(RequestParam.TAG)
+        requestedParameters.add(PipelineParameters.TAG)
     }
 
     static PushBuilder forPushes(){
@@ -55,7 +55,7 @@ class Registration {
 
     static class PushBuilder implements Builder {
         PushBuilder(){
-            eventType = EventType.PUSH
+            eventType = TriggeringEvent.PUSH
         }
 
         PushBuilder addBranchRestriction(String branch){
@@ -71,7 +71,7 @@ class Registration {
 
     static class TagBuilder implements Builder {
         TagBuilder(){
-            eventType = EventType.TAG
+            eventType = TriggeringEvent.TAG
         }
 
         TagBuilder addTagAsParameter(){
@@ -87,7 +87,7 @@ class Registration {
 
     static class LabelBuilder implements Builder {
         LabelBuilder(String... labels){
-            eventType = EventType.LABEL
+            eventType = TriggeringEvent.LABEL
             request.labels = labels
         }
 
@@ -99,17 +99,17 @@ class Registration {
 
     static class PrBuilder implements Builder {
         PrBuilder(){
-            eventType = EventType.PR_OPEN
+            eventType = TriggeringEvent.PR_OPEN
         }
     }
 
     private trait Builder {
-        EventType eventType
-        Registration request
+        TriggeringEvent eventType
+        Request request
 
-        Registration getRequest(){
+        Request getRequest(){
             if(request == null){
-                request = new Registration(eventType)
+                request = new Request(eventType)
             }
             return request
         }
@@ -124,7 +124,7 @@ class Registration {
             return this
         }
 
-        Registration build(){
+        Request build(){
             return request
         }
     }

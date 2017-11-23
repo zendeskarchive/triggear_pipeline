@@ -1,12 +1,12 @@
 package com.futuresimple.triggear
 
-enum EventType {
+enum TriggeringEvent {
     LABEL('labeled'),
     PUSH('push'),
     TAG('tagged'),
     PR_OPEN('opened')
 
-    EventType(String eventName) {
+    TriggeringEvent(String eventName) {
         this.eventName = eventName
     }
     private final String eventName

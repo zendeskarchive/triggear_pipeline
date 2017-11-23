@@ -1,11 +1,11 @@
 package com.futuresimple.triggear
 
-enum RequestParam {
+enum PipelineParameters {
     BRANCH('branch'),
     SHA('sha'),
     TAG('tag')
 
-    RequestParam(String requestParam) {
+    PipelineParameters(String requestParam) {
         this.requestParam = requestParam
     }
     private final String requestParam

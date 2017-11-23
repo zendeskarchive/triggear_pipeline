@@ -1,6 +1,6 @@
 package com.futuresimple.triggear
 
-class GitHubRepo implements Serializable {
+class GitHubRepository implements Serializable {
     String organizationName
     String repositoryUrl
     String repositoryName
@@ -11,7 +11,7 @@ class GitHubRepo implements Serializable {
      *
      * @param repositoryName Short repository name, e.g. for git@github.com:futuresimple/triggear pass here 'futuresimple' and 'triggear'
      */
-    GitHubRepo(String organizationName, String repositoryName){
+    GitHubRepository(String organizationName, String repositoryName){
         this.organizationName = organizationName
         this.repositoryUrl = "git@github.com:${organizationName}/${repositoryName}.git"
         this.repositoryName = repositoryName

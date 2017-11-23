@@ -2,16 +2,16 @@ package com.futuresimple.triggear
 
 import groovy.json.JsonOutput
 
-class Triggear implements Serializable {
+class TriggearClient implements Serializable {
     private Object context
-    private GitHubRepo repository
+    private GitHubRepository repository
 
     /**
      * Create a Triggear object for specific repository
      *
      * @param repositoryFullName full name of GitHub repository, e.g. "futuresimple/triggear"
      */
-    Triggear(context, GitHubRepo repository) {
+    TriggearClient(context, GitHubRepository repository) {
         this.context = context
         this.repository = repository
     }
@@ -26,7 +26,7 @@ class Triggear implements Serializable {
      * @param statusUrl URL that this status should direct to. Current BUILD_URL by default
      */
     void addCommitStatus(String sha,
-                         CommitState state,
+                         CommitStatus state,
                          String description,
                          String statusName = '',
                          String statusUrl = '') {
@@ -61,7 +61,7 @@ class Triggear implements Serializable {
         ])
     }
 
-    void register(Registration request) {
+    void register(Request request) {
         sendRequestToTriggearService(ApiMethods.REGISTER,
             [
                 eventType           : request.registrationEvent.getEventName(),

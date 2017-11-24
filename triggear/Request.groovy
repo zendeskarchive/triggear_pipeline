@@ -1,5 +1,7 @@
 package com.futuresimple.triggear
 
+import com.getbase.plumber.triggear.EventType
+
 class Request {
     TriggeringEvent registrationEvent
     List<String> labels = []
@@ -53,7 +55,7 @@ class Request {
 
     static class PushBuilder extends Builder {
         PushBuilder(){
-            eventType = TriggeringEvent.PUSH
+            super(TriggeringEvent.PUSH)
         }
 
         PushBuilder addBranchRestriction(String branch){
@@ -69,7 +71,7 @@ class Request {
 
     static class TagBuilder extends Builder {
         TagBuilder(){
-            eventType = TriggeringEvent.TAG
+            super(TriggeringEvent.TAG)
         }
 
         TagBuilder addTagAsParameter(){
@@ -85,7 +87,7 @@ class Request {
 
     static class LabelBuilder extends Builder {
         LabelBuilder(String... labels){
-            eventType = TriggeringEvent.LABEL
+            super(TriggeringEvent.LABEL)
             request.labels = labels
         }
 
@@ -97,13 +99,18 @@ class Request {
 
     static class PrBuilder extends Builder {
         PrBuilder(){
-            eventType = TriggeringEvent.PR_OPEN
+            super(TriggeringEvent.PR_OPEN)
         }
     }
 
     private class Builder {
         TriggeringEvent eventType
         Request request
+
+        Builder(TriggeringEvent eventType){
+            this.eventType = eventType
+            this.request = null
+        }
 
         Request getRequest(){
             if(request == null){

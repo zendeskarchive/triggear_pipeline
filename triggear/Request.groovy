@@ -51,7 +51,7 @@ class Request {
         return new PrBuilder()
     }
 
-    static class PushBuilder implements Builder {
+    static class PushBuilder extends Builder {
         PushBuilder(){
             eventType = TriggeringEvent.PUSH
         }
@@ -67,7 +67,7 @@ class Request {
         }
     }
 
-    static class TagBuilder implements Builder {
+    static class TagBuilder extends Builder {
         TagBuilder(){
             eventType = TriggeringEvent.TAG
         }
@@ -83,7 +83,7 @@ class Request {
         }
     }
 
-    static class LabelBuilder implements Builder {
+    static class LabelBuilder extends Builder {
         LabelBuilder(String... labels){
             eventType = TriggeringEvent.LABEL
             request.labels = labels
@@ -95,13 +95,13 @@ class Request {
         }
     }
 
-    static class PrBuilder implements Builder {
+    static class PrBuilder extends Builder {
         PrBuilder(){
             eventType = TriggeringEvent.PR_OPEN
         }
     }
 
-    private static trait Builder {
+    private static class Builder {
         TriggeringEvent eventType
         Request request
 

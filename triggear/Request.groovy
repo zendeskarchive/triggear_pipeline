@@ -1,13 +1,11 @@
 package com.futuresimple.triggear
 
-import groovy.transform.PackageScope
-
 class Request {
-    @PackageScope TriggeringEvent registrationEvent
-    @PackageScope List<String> labels = []
-    @PackageScope List<PipelineParameters> requestedParameters = []
-    @PackageScope List<String> changeRestrictions = []
-    @PackageScope List<String> branchRestrictions = []
+    TriggeringEvent registrationEvent
+    List<String> labels = []
+    List<PipelineParameters> requestedParameters = []
+    List<String> changeRestrictions = []
+    List<String> branchRestrictions = []
 
     private Request(TriggeringEvent type){
         registrationEvent = type

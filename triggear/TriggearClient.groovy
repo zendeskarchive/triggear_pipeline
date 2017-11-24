@@ -45,6 +45,32 @@ class TriggearClient implements Serializable {
     }
 
     /**
+     * Add a GitHub status to commit identified by SHA based on result of called Closure. If Closure raises exception
+     * status is set to failure. It's set to success otherwise.
+     *
+     * @param sha SHA of the commit to add status to
+     * @param statusName Name of status to add
+     * @param targetUrl URL that this status should direct to
+     * @param description Short description of status
+     * @param body Closure to call and check for errors
+     */
+    void reportStatus(String sha, String statusName, String targetUrl, String description = '', Closure body){
+        Boolean passed = false
+        try{
+            body()
+            passed = true
+        } finally {
+            addCommitStatus(
+                sha,
+                passed ? CommitStatus.SUCCESS : CommitStatus.FAILURE,
+                description != '' ? description : "executed for SHA ${sha[0..6]}",
+                statusName,
+                targetUrl
+            )
+        }
+    }
+
+    /**
      * Add a GitHub comment to commit identified by SHA
      *
      * @param sha SHA of the commit to add comment to

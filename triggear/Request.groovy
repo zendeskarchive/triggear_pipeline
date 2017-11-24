@@ -57,12 +57,12 @@ class Request implements Serializable{
         }
 
         PushBuilder addBranchRestriction(String branch){
-            request.addBranchRestriction(branch)
+            getRequest().addBranchRestriction(branch)
             return this
         }
 
         PushBuilder addChangeRestriction(String pathPrefix){
-            request.addChangeRestriction(pathPrefix)
+            getRequest().addChangeRestriction(pathPrefix)
             return this
         }
     }
@@ -73,12 +73,12 @@ class Request implements Serializable{
         }
 
         TagBuilder addTagAsParameter(){
-            request.addTagAsParameter()
+            getRequest().addTagAsParameter()
             return this
         }
 
         TagBuilder addBranchRestriction(String branch){
-            request.addBranchRestriction(branch)
+            getRequest().addBranchRestriction(branch)
             return this
         }
     }
@@ -89,7 +89,7 @@ class Request implements Serializable{
         }
 
         LabelBuilder addLabel(String label){
-            request.addLabel(label)
+            getRequest().addLabel(label)
             return this
         }
     }
@@ -100,7 +100,7 @@ class Request implements Serializable{
         }
 
         PrBuilder addBranchRestriction(String branch){
-            request.addBranchRestriction(branch)
+            getRequest().addBranchRestriction(branch)
             return this
         }
     }

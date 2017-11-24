@@ -101,7 +101,7 @@ class Request {
         }
     }
 
-    private trait Builder {
+    private static trait Builder {
         TriggeringEvent eventType
         Request request
 

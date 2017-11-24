@@ -101,7 +101,7 @@ class Request {
         }
     }
 
-    private static class Builder {
+    private class Builder {
         TriggeringEvent eventType
         Request request
 

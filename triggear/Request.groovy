@@ -43,8 +43,8 @@ class Request implements Serializable{
         return new TagBuilder()
     }
 
-    static LabelBuilder forLabels(String... labels){
-        return new LabelBuilder(labels)
+    static LabelBuilder forLabels(){
+        return new LabelBuilder()
     }
 
     static PrBuilder forPrOpened(){
@@ -84,9 +84,8 @@ class Request implements Serializable{
     }
 
     static class LabelBuilder extends Builder {
-        LabelBuilder(String... labels){
+        LabelBuilder(){
             this.eventType = TriggeringEvent.LABEL
-            request.labels = labels
         }
 
         LabelBuilder addLabel(String label){

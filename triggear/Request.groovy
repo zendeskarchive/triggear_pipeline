@@ -53,7 +53,7 @@ class Request implements Serializable{
 
     static class PushBuilder extends Builder {
         PushBuilder(){
-            super(TriggeringEvent.PUSH)
+            this.eventType = TriggeringEvent.PUSH
         }
 
         PushBuilder addBranchRestriction(String branch){
@@ -69,7 +69,7 @@ class Request implements Serializable{
 
     static class TagBuilder extends Builder {
         TagBuilder(){
-            super(TriggeringEvent.TAG)
+            this.eventType = TriggeringEvent.TAG
         }
 
         TagBuilder addTagAsParameter(){
@@ -85,7 +85,7 @@ class Request implements Serializable{
 
     static class LabelBuilder extends Builder {
         LabelBuilder(String... labels){
-            super(TriggeringEvent.LABEL)
+            this.eventType = TriggeringEvent.LABEL
             request.labels = labels
         }
 
@@ -97,7 +97,7 @@ class Request implements Serializable{
 
     static class PrBuilder extends Builder {
         PrBuilder(){
-            super(TriggeringEvent.PR_OPEN)
+            this.eventType = TriggeringEvent.PR_OPEN
         }
 
         PrBuilder addBranchRestriction(String branch){
@@ -109,11 +109,6 @@ class Request implements Serializable{
     private static class Builder implements Serializable {
         protected TriggeringEvent eventType
         protected Request request
-
-        Builder(TriggeringEvent eventType){
-            this.eventType = eventType
-            this.request = null
-        }
 
         protected Request getRequest(){
             if(request == null){

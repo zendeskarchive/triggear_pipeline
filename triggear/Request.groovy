@@ -1,7 +1,5 @@
 package com.futuresimple.triggear
 
-import com.getbase.plumber.triggear.EventType
-
 class Request {
     TriggeringEvent registrationEvent
     List<String> labels = []
@@ -101,18 +99,23 @@ class Request {
         PrBuilder(){
             super(TriggeringEvent.PR_OPEN)
         }
+
+        PrBuilder addBranchRestriction(String branch){
+            request.addBranchRestriction(branch)
+            return this
+        }
     }
 
     private class Builder {
-        TriggeringEvent eventType
-        Request request
+        protected TriggeringEvent eventType
+        protected Request request
 
         Builder(TriggeringEvent eventType){
             this.eventType = eventType
             this.request = null
         }
 
-        Request getRequest(){
+        protected Request getRequest(){
             if(request == null){
                 request = new Request(eventType)
             }

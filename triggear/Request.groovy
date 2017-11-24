@@ -1,6 +1,6 @@
 package com.futuresimple.triggear
 
-class Request {
+class Request implements Serializable{
     TriggeringEvent registrationEvent
     List<String> labels = []
     List<PipelineParameters> requestedParameters = []
@@ -106,7 +106,7 @@ class Request {
         }
     }
 
-    private static class Builder {
+    private static class Builder implements Serializable {
         protected TriggeringEvent eventType
         protected Request request
 

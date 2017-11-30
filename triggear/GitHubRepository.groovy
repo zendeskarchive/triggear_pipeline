@@ -5,6 +5,8 @@ class GitHubRepository implements Serializable {
     String repositoryUrl
     String repositoryName
     String repositoryFullName
+
+    protected GitHubRepository(){}
     
     /**
      * Creates a simple 'DTO' which carries couple of forms of GitHub repo URL and names.

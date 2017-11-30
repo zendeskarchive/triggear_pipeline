@@ -97,7 +97,7 @@ class TriggearClient implements Serializable {
                 requested_params    : request.requestedParameters.collect { it.getRequestParam() },
                 branch_restrictions : request.branchRestrictions,
                 change_restrictions : request.changeRestrictions,
-                file_workspace      : request.fileRestrictions
+                file_restrictions   : request.fileRestrictions
             ]
         )
     }

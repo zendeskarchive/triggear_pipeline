@@ -35,7 +35,7 @@ class TriggearClient implements Serializable {
         sendRequestToTriggearService(ApiMethods.STATUS,
             [
                 sha        : sha,
-                repository : repository.repositoryFullName,
+                repository : repository.getRepositoryFullName(),
                 state      : state.getGitHubStateName(),
                 description: description,
                 url        : statusUrl,
@@ -81,7 +81,7 @@ class TriggearClient implements Serializable {
         sendRequestToTriggearService(ApiMethods.COMMENT,
         [
             sha: sha,
-            repository: repository.repositoryFullName,
+            repository: repository.getRepositoryFullName(),
             jobName: context.env.JOB_NAME,
             body: body
         ])
@@ -91,7 +91,7 @@ class TriggearClient implements Serializable {
         sendRequestToTriggearService(ApiMethods.REGISTER,
             [
                 eventType           : request.registrationEvent.getEventName(),
-                repository          : repository.repositoryFullName,
+                repository          : repository.getRepositoryFullName(),
                 jobName             : context.env.JOB_NAME,
                 labels              : request.labels,
                 requested_params    : request.requestedParameters.collect { it.getRequestParam() },

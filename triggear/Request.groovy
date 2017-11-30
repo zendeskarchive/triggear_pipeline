@@ -6,6 +6,7 @@ class Request implements Serializable{
     List<PipelineParameters> requestedParameters = []
     List<String> changeRestrictions = []
     List<String> branchRestrictions = []
+    List<String> fileRestrictions = []
 
     private Request(TriggeringEvent type){
         registrationEvent = type
@@ -21,6 +22,10 @@ class Request implements Serializable{
 
     private void addBranchRestriction(String branch){
         branchRestrictions.add(branch)
+    }
+
+    private void addFileRestriction(String filePath){
+        fileRestrictions.add(filePath)
     }
 
     private void addBranchAsParameter(){
@@ -123,6 +128,11 @@ class Request implements Serializable{
 
         Builder addShaAsParameter(){
             getRequest().addShaAsParameter()
+            return this
+        }
+
+        Builder addFileRestriction(String filePath){
+            getRequest().addFileRestriction(filePath)
             return this
         }
 

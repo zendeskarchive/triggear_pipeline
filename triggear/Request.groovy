@@ -40,6 +40,10 @@ class Request implements Serializable{
         requestedParameters.add(PipelineParameters.TAG)
     }
 
+    private void addChangesAsParameter(){
+        requestedParameters.add(PipelineParameters.CHANGES)
+    }
+
     static PushBuilder forPushes(){
         return new PushBuilder()
     }
@@ -68,6 +72,11 @@ class Request implements Serializable{
 
         PushBuilder addChangeRestriction(String pathPrefix){
             getRequest().addChangeRestriction(pathPrefix)
+            return this
+        }
+
+        PushBuilder addChangesAsParameter(){
+            getRequest().addChangesAsParameter()
             return this
         }
     }

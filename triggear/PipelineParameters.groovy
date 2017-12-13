@@ -3,7 +3,8 @@ package com.futuresimple.triggear
 enum PipelineParameters {
     BRANCH('branch'),
     SHA('sha'),
-    TAG('tag')
+    TAG('tag'),
+    CHANGES('changes')
 
     PipelineParameters(String requestParam) {
         this.requestParam = requestParam

@@ -97,9 +97,9 @@ class TriggearClient implements Serializable {
      * @return String of strings like job_name#number_of_missed joined with ','.
      */
     static String getMissing(context, Request request){
-        return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.MISSING, [
-            eventType : request.registrationEvent.getEventName()
-        ], 'GET')
+        return new TriggearClient(context, null).sendRequestToTriggearService(
+            ApiMethods.MISSING, [:], 'GET', "/${request.registrationEvent.getEventName()}"
+        )
     }
 
     void register(Request request) {
@@ -118,18 +118,21 @@ class TriggearClient implements Serializable {
     }
 
     private String sendRequestToTriggearService(ApiMethods methodName,
-                                                Map<String, Object> payload,
-                                                String httpMethod = 'POST'){
+                                                Map<String, Object> payload = [:],
+                                                String httpMethod = 'POST',
+                                                String requestVariable = ''){
         try {
             context.withCredentials([context.string(credentialsId: 'triggear_token', variable: 'triggear_token')]) {
-                URLConnection post = new URL("$context.env.TRIGGEAR_URL" + "${methodName.getMethodName()}").openConnection()
-                String payloadAsString = JsonOutput.toJson(payload)
+                URLConnection post = new URL("${context.env.TRIGGEAR_URL}${methodName.getMethodName()}${requestVariable}").openConnection()
                 context.println("${methodName} call to Triggear service (payload: " + payload + ")")
                 post.setRequestMethod(httpMethod)
                 post.setDoOutput(true)
                 post.setRequestProperty("Content-Type", "application/json")
                 post.setRequestProperty("Authorization", "Token ${context.triggear_token}")
-                post.getOutputStream().write(payloadAsString.getBytes("UTF-8"))
+                if(payload != [:]) {
+                    String payloadAsString = JsonOutput.toJson(payload)
+                    post.getOutputStream().write(payloadAsString.getBytes("UTF-8"))
+                }
                 int postResponseCode = post.getResponseCode()
                 if (postResponseCode == 200) {
                     String responseText = post.getInputStream().getText()

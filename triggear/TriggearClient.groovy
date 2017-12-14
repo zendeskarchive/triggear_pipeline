@@ -9,6 +9,7 @@ class TriggearClient implements Serializable {
     /**
      * Create a Triggear object for specific repository
      *
+     * @param context Pipeline context (a.k.a. steps) - simply pass `this` from pipeline
      * @param repositoryFullName full name of GitHub repository, e.g. "futuresimple/triggear"
      */
     TriggearClient(context, GitHubRepository repository) {
@@ -89,13 +90,14 @@ class TriggearClient implements Serializable {
 
     /**
      * Get all jobs for specific registration type that were missed at least once when trying to call them.
-     * Example: new TriggearClient('fstech/plumber').getMissing(Request.forPushes().build())
+     * Example: new TriggearClient.getMissing(Request.forPushes().build())
+     *
+     * @param context Pipeline context (a.k.a. steps) - simply pass `this` from pipeline
      * @param request: Request object. Only eventType specification is required.
-     * @return String of strings like job_name#number_of_missed joined with ','. Not limited to repo specified in
-     * TriggearClient constructor
+     * @return String of strings like job_name#number_of_missed joined with ','.
      */
-    String getMissing(Request request){
-        return sendRequestToTriggearService(ApiMethods.MISSING, [
+    static String getMissing(context, Request request){
+        return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.MISSING, [
             eventType : request.registrationEvent.getEventName()
         ])
     }

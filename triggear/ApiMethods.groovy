@@ -1,6 +1,7 @@
 package com.futuresimple.triggear
 
 enum ApiMethods {
+    MISSING('missing'),
     REGISTER('register'),
     COMMENT('comment'),
     STATUS('status')

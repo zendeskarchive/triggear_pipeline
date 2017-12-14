@@ -87,6 +87,19 @@ class TriggearClient implements Serializable {
         ])
     }
 
+    /**
+     * Get all jobs for specific registration type that were missed at least once when trying to call them.
+     * Example: new TriggearClient('fstech/plumber').getMissing(Request.forPushes().build())
+     * @param request: Request object. Only eventType specification is required.
+     * @return String of strings like job_name#number_of_missed joined with ','. Not limited to repo specified in
+     * TriggearClient constructor
+     */
+    String getMissing(Request request){
+        return sendRequestToTriggearService(ApiMethods.MISSING, [
+            eventType : request.registrationEvent.getEventName()
+        ])
+    }
+
     void register(Request request) {
         sendRequestToTriggearService(ApiMethods.REGISTER,
             [
@@ -102,7 +115,7 @@ class TriggearClient implements Serializable {
         )
     }
 
-    private void sendRequestToTriggearService(ApiMethods methodName, Map<String, Object> payload){
+    private String sendRequestToTriggearService(ApiMethods methodName, Map<String, Object> payload){
         try {
             context.withCredentials([context.string(credentialsId: 'triggear_token', variable: 'triggear_token')]) {
                 URLConnection post = new URL("$context.env.TRIGGEAR_URL" + "${methodName.getMethodName()}").openConnection()
@@ -116,6 +129,7 @@ class TriggearClient implements Serializable {
                 int postResponseCode = post.getResponseCode()
                 if (postResponseCode == 200) {
                     context.println(post.getInputStream().getText())
+                    return post.getInputStream().getText()
                 } else {
                     context.println("Calling Triggears ${methodName} failed with code " + postResponseCode.toString())
                 }

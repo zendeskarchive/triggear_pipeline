@@ -130,8 +130,9 @@ class TriggearClient implements Serializable {
                 post.getOutputStream().write(payloadAsString.getBytes("UTF-8"))
                 int postResponseCode = post.getResponseCode()
                 if (postResponseCode == 200) {
-                    context.println(post.getInputStream().getText())
-                    return post.getInputStream().getText()
+                    String responseText = post.getInputStream().getText()
+                    context.println(responseText)
+                    return responseText
                 } else {
                     context.println("Calling Triggears ${methodName} failed with code " + postResponseCode.toString())
                 }

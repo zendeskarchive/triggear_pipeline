@@ -112,6 +112,15 @@ class TriggearClient implements Serializable {
         )
     }
 
+    static String clearMissedCount(context, String jobName, Request request){
+        return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.CLEAR,
+                [
+                        eventType: request.registrationEvent.getEventName(),
+                        jobName: jobName
+                ]
+        )
+    }
+
     void register(Request request) {
         sendRequestToTriggearService(ApiMethods.REGISTER,
             [

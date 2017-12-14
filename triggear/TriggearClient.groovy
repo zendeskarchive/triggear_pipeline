@@ -102,6 +102,16 @@ class TriggearClient implements Serializable {
         )
     }
 
+    static String deregister(context, String jobName, Request request){
+        return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.DEREGISTER,
+            [
+                eventType: request.registrationEvent.getEventName(),
+                jobName: jobName,
+                caller: "${context.env.BUILD_TAG}"
+            ]
+        )
+    }
+
     void register(Request request) {
         sendRequestToTriggearService(ApiMethods.REGISTER,
             [
@@ -145,5 +155,6 @@ class TriggearClient implements Serializable {
         } catch(e) {
             context.println("Calling Triggears ${methodName} failed! " + e)
         }
+        return ''
     }
 }

@@ -146,6 +146,7 @@ class Request implements Serializable{
         }
 
         Request build(){
+            getRequest()
             return request
         }
     }

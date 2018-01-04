@@ -3,7 +3,7 @@ package com.futuresimple.triggear
 class Request implements Serializable{
     TriggeringEvent registrationEvent
     List<String> labels = []
-    List<PipelineParameters> requestedParameters = []
+    Map<PipelineParameters, String> requestedParameters = [:]
     List<String> changeRestrictions = []
     List<String> branchRestrictions = []
     List<String> fileRestrictions = []
@@ -28,20 +28,20 @@ class Request implements Serializable{
         fileRestrictions.add(filePath)
     }
 
-    private void addBranchAsParameter(){
-        requestedParameters.add(PipelineParameters.BRANCH)
+    private void addBranchAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.BRANCH, nameOverwrite)
     }
 
-    private void addShaAsParameter(){
-        requestedParameters.add(PipelineParameters.SHA)
+    private void addShaAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.SHA, nameOverwrite)
     }
 
-    private void addTagAsParameter(){
-        requestedParameters.add(PipelineParameters.TAG)
+    private void addTagAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.TAG, nameOverwrite)
     }
 
-    private void addChangesAsParameter(){
-        requestedParameters.add(PipelineParameters.CHANGES)
+    private void addChangesAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.CHANGES, nameOverwrite)
     }
 
     static PushBuilder forPushes(){
@@ -75,8 +75,8 @@ class Request implements Serializable{
             return this
         }
 
-        PushBuilder addChangesAsParameter(){
-            getRequest().addChangesAsParameter()
+        PushBuilder addChangesAsParameter(String nameOverwrite=null){
+            getRequest().addChangesAsParameter(nameOverwrite)
             return this
         }
     }
@@ -86,8 +86,8 @@ class Request implements Serializable{
             this.eventType = TriggeringEvent.TAG
         }
 
-        TagBuilder addTagAsParameter(){
-            getRequest().addTagAsParameter()
+        TagBuilder addTagAsParameter(String nameOverwrite=null){
+            getRequest().addTagAsParameter(nameOverwrite)
             return this
         }
 
@@ -130,13 +130,13 @@ class Request implements Serializable{
             return request
         }
 
-        Builder addBranchAsParameter(){
-            getRequest().addBranchAsParameter()
+        Builder addBranchAsParameter(String nameOverwrite=null){
+            getRequest().addBranchAsParameter(nameOverwrite)
             return this
         }
 
-        Builder addShaAsParameter(){
-            getRequest().addShaAsParameter()
+        Builder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
             return this
         }
 

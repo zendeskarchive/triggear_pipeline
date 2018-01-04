@@ -128,7 +128,9 @@ class TriggearClient implements Serializable {
                 repository          : repository.getRepositoryFullName(),
                 jobName             : context.env.JOB_NAME,
                 labels              : request.labels,
-                requested_params    : request.requestedParameters.collect { it.getRequestParam() },
+                requested_params    : request.requestedParameters.collect { PipelineParameters param, String nameOverride ->
+                    nameOverride == null ? param.getRequestParam() : "${param.getRequestParam()}:${nameOverride}"
+                },
                 branch_restrictions : request.branchRestrictions,
                 change_restrictions : request.changeRestrictions,
                 file_restrictions   : request.fileRestrictions

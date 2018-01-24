@@ -124,6 +124,7 @@ class TriggearClient implements Serializable {
     void register(Request request) {
         sendRequestToTriggearService(ApiMethods.REGISTER,
             [
+                jenkins_url         : context.env.JENKINS_URL,
                 eventType           : request.registrationEvent.getEventName(),
                 repository          : repository.getRepositoryFullName(),
                 jobName             : context.env.JOB_NAME,

@@ -105,9 +105,10 @@ class TriggearClient implements Serializable {
     static String deregister(context, String jobName, Request request){
         return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.DEREGISTER,
             [
-                eventType: request.registrationEvent.getEventName(),
-                jobName: jobName,
-                caller: "${context.env.BUILD_TAG}"
+                jenkins_url : context.env.JENKINS_URL,
+                eventType   : request.registrationEvent.getEventName(),
+                jobName     : jobName,
+                caller      : "${context.env.BUILD_TAG}"
             ]
         )
     }
@@ -115,8 +116,9 @@ class TriggearClient implements Serializable {
     static String clearMissedCount(context, String jobName, Request request){
         return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.CLEAR,
                 [
-                        eventType: request.registrationEvent.getEventName(),
-                        jobName: jobName
+                    jenkins_url: context.env.JENKINS_URL,
+                    eventType: request.registrationEvent.getEventName(),
+                    jobName: jobName
                 ]
         )
     }

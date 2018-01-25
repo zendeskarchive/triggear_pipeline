@@ -105,9 +105,10 @@ class TriggearClient implements Serializable {
     static String deregister(context, String jobName, Request request){
         return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.DEREGISTER,
             [
-                eventType: request.registrationEvent.getEventName(),
-                jobName: jobName,
-                caller: "${context.env.BUILD_TAG}"
+                jenkins_url : context.env.JENKINS_URL,
+                eventType   : request.registrationEvent.getEventName(),
+                jobName     : jobName,
+                caller      : "${context.env.BUILD_TAG}"
             ]
         )
     }
@@ -115,8 +116,9 @@ class TriggearClient implements Serializable {
     static String clearMissedCount(context, String jobName, Request request){
         return new TriggearClient(context, null).sendRequestToTriggearService(ApiMethods.CLEAR,
                 [
-                        eventType: request.registrationEvent.getEventName(),
-                        jobName: jobName
+                    jenkins_url: context.env.JENKINS_URL,
+                    eventType: request.registrationEvent.getEventName(),
+                    jobName: jobName
                 ]
         )
     }
@@ -124,6 +126,7 @@ class TriggearClient implements Serializable {
     void register(Request request) {
         sendRequestToTriggearService(ApiMethods.REGISTER,
             [
+                jenkins_url         : context.env.JENKINS_URL,
                 eventType           : request.registrationEvent.getEventName(),
                 repository          : repository.getRepositoryFullName(),
                 jobName             : context.env.JOB_NAME,
@@ -142,6 +145,7 @@ class TriggearClient implements Serializable {
                                                 Map<String, Object> payload = [:],
                                                 String httpMethod = 'POST',
                                                 String requestVariable = ''){
+        String responseText = ''
         try {
             context.withCredentials([context.string(credentialsId: 'triggear_token', variable: 'triggear_token')]) {
                 URLConnection post = new URL("${context.env.TRIGGEAR_URL}${methodName.getMethodName()}${requestVariable}").openConnection()
@@ -156,16 +160,18 @@ class TriggearClient implements Serializable {
                 }
                 int postResponseCode = post.getResponseCode()
                 if (postResponseCode == 200) {
-                    String responseText = post.getInputStream().getText()
+                    responseText = post.getInputStream().getText()
                     context.println(responseText)
                     return responseText
                 } else {
                     context.println("Calling Triggears ${methodName} failed with code " + postResponseCode.toString())
+                    return responseText
                 }
             }
         } catch(e) {
             context.println("Calling Triggears ${methodName} failed! " + e)
+            return responseText
         }
-        return ''
+        return responseText
     }
 }

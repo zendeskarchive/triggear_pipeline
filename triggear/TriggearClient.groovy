@@ -145,6 +145,7 @@ class TriggearClient implements Serializable {
                                                 Map<String, Object> payload = [:],
                                                 String httpMethod = 'POST',
                                                 String requestVariable = ''){
+        String responseText = ''
         try {
             context.withCredentials([context.string(credentialsId: 'triggear_token', variable: 'triggear_token')]) {
                 URLConnection post = new URL("${context.env.TRIGGEAR_URL}${methodName.getMethodName()}${requestVariable}").openConnection()
@@ -159,16 +160,18 @@ class TriggearClient implements Serializable {
                 }
                 int postResponseCode = post.getResponseCode()
                 if (postResponseCode == 200) {
-                    String responseText = post.getInputStream().getText()
+                    responseText = post.getInputStream().getText()
                     context.println(responseText)
                     return responseText
                 } else {
                     context.println("Calling Triggears ${methodName} failed with code " + postResponseCode.toString())
+                    return responseText
                 }
             }
         } catch(e) {
             context.println("Calling Triggears ${methodName} failed! " + e)
+            return responseText
         }
-        return ''
+        return responseText
     }
 }

@@ -6,7 +6,9 @@ enum ApiMethods {
     MISSING('missing'),
     REGISTER('register'),
     COMMENT('comment'),
-    STATUS('status')
+    STATUS('status'),
+    DEPLOYMENT('deployment'),
+    DEPLOYMENT_STATUS('deployment_status')
 
     ApiMethods(String methodName) {
         this.methodName = methodName

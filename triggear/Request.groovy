@@ -44,6 +44,14 @@ class Request implements Serializable{
         requestedParameters.put(PipelineParameters.CHANGES, nameOverwrite)
     }
 
+    private void addReleaseTargetAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.RELEASE_TARGET, nameOverwrite)
+    }
+
+    private void addIsPrereleaseAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.IS_PRERELEASE, nameOverwrite)
+    }
+
     static PushBuilder forPushes(){
         return new PushBuilder()
     }
@@ -58,6 +66,10 @@ class Request implements Serializable{
 
     static PrBuilder forPrOpened(){
         return new PrBuilder()
+    }
+
+    static ReleaseBuilder forReleases(){
+        return new ReleaseBuilder()
     }
 
     static class PushBuilder extends Builder {
@@ -90,11 +102,6 @@ class Request implements Serializable{
             getRequest().addTagAsParameter(nameOverwrite)
             return this
         }
-
-        TagBuilder addBranchRestriction(String branch){
-            getRequest().addBranchRestriction(branch)
-            return this
-        }
     }
 
     static class LabelBuilder extends Builder {
@@ -104,6 +111,27 @@ class Request implements Serializable{
 
         LabelBuilder addLabel(String label){
             getRequest().addLabel(label)
+            return this
+        }
+    }
+
+    static class ReleaseBuilder extends Builder {
+        ReleaseBuilder(){
+            this.eventType = TriggeringEvent.RELEASE
+        }
+
+        ReleaseBuilder addReleaseTargetAsParameter(String nameOverwrite=null){
+            getRequest().addReleaseTargetAsParameter(nameOverwrite)
+            return this
+        }
+
+        ReleaseBuilder addIsPrereleaseAsParameter(String nameOverwrite=null){
+            getRequest().addIsPrereleaseAsParameter(nameOverwrite)
+            return this
+        }
+
+        ReleaseBuilder addTagAsParameter(String nameOverwrite=null){
+            getRequest().addTagAsParameter(nameOverwrite)
             return this
         }
     }

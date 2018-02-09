@@ -91,6 +91,16 @@ class Request implements Serializable{
             getRequest().addChangesAsParameter(nameOverwrite)
             return this
         }
+
+        PushBuilder addBranchAsParameter(String nameOverwrite=null){
+            getRequest().addBranchAsParameter(nameOverwrite)
+            return this
+        }
+
+        PushBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
+            return this
+        }
     }
 
     static class TagBuilder extends Builder {
@@ -102,6 +112,11 @@ class Request implements Serializable{
             getRequest().addTagAsParameter(nameOverwrite)
             return this
         }
+
+        TagBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
+            return this
+        }
     }
 
     static class LabelBuilder extends Builder {
@@ -111,6 +126,16 @@ class Request implements Serializable{
 
         LabelBuilder addLabel(String label){
             getRequest().addLabel(label)
+            return this
+        }
+
+        LabelBuilder addBranchAsParameter(String nameOverwrite=null){
+            getRequest().addBranchAsParameter(nameOverwrite)
+            return this
+        }
+
+        LabelBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
             return this
         }
     }
@@ -145,6 +170,16 @@ class Request implements Serializable{
             getRequest().addBranchRestriction(branch)
             return this
         }
+
+        PrBuilder addBranchAsParameter(String nameOverwrite=null){
+            getRequest().addBranchAsParameter(nameOverwrite)
+            return this
+        }
+
+        PrBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
+            return this
+        }
     }
 
     private static class Builder implements Serializable {
@@ -156,16 +191,6 @@ class Request implements Serializable{
                 request = new Request(eventType)
             }
             return request
-        }
-
-        Builder addBranchAsParameter(String nameOverwrite=null){
-            getRequest().addBranchAsParameter(nameOverwrite)
-            return this
-        }
-
-        Builder addShaAsParameter(String nameOverwrite=null){
-            getRequest().addShaAsParameter(nameOverwrite)
-            return this
         }
 
         Builder addFileRestriction(String filePath){

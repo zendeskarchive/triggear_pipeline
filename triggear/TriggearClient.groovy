@@ -123,26 +123,26 @@ class TriggearClient implements Serializable {
         )
     }
 
-    void addDeployment(String sha,
+    void addDeployment(String ref,
                        String environment,
                        String description){
         sendRequestToTriggearService(ApiMethods.DEPLOYMENT,
             [
-                sha: sha,
+                ref: ref,
                 repo: repository.getRepositoryFullName(),
                 environment: environment,
                 description: description
             ])
     }
 
-    void addDeploymentStatus(String sha,
+    void addDeploymentStatus(String ref,
                              String environment,
                              String description,
                              String targetUrl,
                              DeploymentState state){
-        sendRequestToTriggearService(ApiMethods.DEPLOYMENT,
+        sendRequestToTriggearService(ApiMethods.DEPLOYMENT_STATUS,
             [
-                sha: sha,
+                ref: ref,
                 repo: repository.getRepositoryFullName(),
                 environment: environment,
                 description: description,

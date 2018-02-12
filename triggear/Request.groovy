@@ -44,6 +44,14 @@ class Request implements Serializable{
         requestedParameters.put(PipelineParameters.CHANGES, nameOverwrite)
     }
 
+    private void addReleaseTargetAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.RELEASE_TARGET, nameOverwrite)
+    }
+
+    private void addIsPrereleaseAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.IS_PRERELEASE, nameOverwrite)
+    }
+
     static PushBuilder forPushes(){
         return new PushBuilder()
     }
@@ -58,6 +66,10 @@ class Request implements Serializable{
 
     static PrBuilder forPrOpened(){
         return new PrBuilder()
+    }
+
+    static ReleaseBuilder forReleases(){
+        return new ReleaseBuilder()
     }
 
     static class PushBuilder extends Builder {
@@ -79,6 +91,16 @@ class Request implements Serializable{
             getRequest().addChangesAsParameter(nameOverwrite)
             return this
         }
+
+        PushBuilder addBranchAsParameter(String nameOverwrite=null){
+            getRequest().addBranchAsParameter(nameOverwrite)
+            return this
+        }
+
+        PushBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
+            return this
+        }
     }
 
     static class TagBuilder extends Builder {
@@ -91,8 +113,8 @@ class Request implements Serializable{
             return this
         }
 
-        TagBuilder addBranchRestriction(String branch){
-            getRequest().addBranchRestriction(branch)
+        TagBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
             return this
         }
     }
@@ -106,6 +128,37 @@ class Request implements Serializable{
             getRequest().addLabel(label)
             return this
         }
+
+        LabelBuilder addBranchAsParameter(String nameOverwrite=null){
+            getRequest().addBranchAsParameter(nameOverwrite)
+            return this
+        }
+
+        LabelBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
+            return this
+        }
+    }
+
+    static class ReleaseBuilder extends Builder {
+        ReleaseBuilder(){
+            this.eventType = TriggeringEvent.RELEASE
+        }
+
+        ReleaseBuilder addReleaseTargetAsParameter(String nameOverwrite=null){
+            getRequest().addReleaseTargetAsParameter(nameOverwrite)
+            return this
+        }
+
+        ReleaseBuilder addIsPrereleaseAsParameter(String nameOverwrite=null){
+            getRequest().addIsPrereleaseAsParameter(nameOverwrite)
+            return this
+        }
+
+        ReleaseBuilder addTagAsParameter(String nameOverwrite=null){
+            getRequest().addTagAsParameter(nameOverwrite)
+            return this
+        }
     }
 
     static class PrBuilder extends Builder {
@@ -115,6 +168,16 @@ class Request implements Serializable{
 
         PrBuilder addBranchRestriction(String branch){
             getRequest().addBranchRestriction(branch)
+            return this
+        }
+
+        PrBuilder addBranchAsParameter(String nameOverwrite=null){
+            getRequest().addBranchAsParameter(nameOverwrite)
+            return this
+        }
+
+        PrBuilder addShaAsParameter(String nameOverwrite=null){
+            getRequest().addShaAsParameter(nameOverwrite)
             return this
         }
     }
@@ -128,16 +191,6 @@ class Request implements Serializable{
                 request = new Request(eventType)
             }
             return request
-        }
-
-        Builder addBranchAsParameter(String nameOverwrite=null){
-            getRequest().addBranchAsParameter(nameOverwrite)
-            return this
-        }
-
-        Builder addShaAsParameter(String nameOverwrite=null){
-            getRequest().addShaAsParameter(nameOverwrite)
-            return this
         }
 
         Builder addFileRestriction(String filePath){

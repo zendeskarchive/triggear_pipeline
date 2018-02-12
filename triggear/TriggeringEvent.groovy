@@ -4,7 +4,8 @@ enum TriggeringEvent {
     LABEL('labeled'),
     PUSH('push'),
     TAG('tagged'),
-    PR_OPEN('opened')
+    PR_OPEN('opened'),
+    RELEASE('release')
 
     TriggeringEvent(String eventName) {
         this.eventName = eventName

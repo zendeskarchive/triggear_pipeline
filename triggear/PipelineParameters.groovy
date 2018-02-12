@@ -4,7 +4,9 @@ enum PipelineParameters {
     BRANCH('branch'),
     SHA('sha'),
     TAG('tag'),
-    CHANGES('changes')
+    CHANGES('changes'),
+    IS_PRERELEASE('is_prerelease'),
+    RELEASE_TARGET('release_target')
 
     PipelineParameters(String requestParam) {
         this.requestParam = requestParam

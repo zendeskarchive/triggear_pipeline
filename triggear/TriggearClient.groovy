@@ -58,6 +58,13 @@ class TriggearClient implements Serializable {
     void reportStatus(String sha, String statusName, String targetUrl, String description = '', Closure body){
         Boolean passed = false
         try{
+            addCommitStatus(
+                    sha,
+                    CommitStatus.PENDING,
+                    description != '' ? description : "executed for SHA ${sha[0..6]}",
+                    statusName,
+                    targetUrl
+            )
             body()
             passed = true
         } finally {

@@ -6,7 +6,9 @@ enum PipelineParameters {
     TAG('tag'),
     CHANGES('changes'),
     IS_PRERELEASE('is_prerelease'),
-    RELEASE_TARGET('release_target')
+    RELEASE_TARGET('release_target'),
+    WHO('who'),
+    PR_URL('pr_url')
 
     PipelineParameters(String requestParam) {
         this.requestParam = requestParam

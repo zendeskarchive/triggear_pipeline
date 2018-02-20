@@ -1,5 +1,6 @@
 package com.futuresimple.triggear
 
+
 class Request implements Serializable{
     TriggeringEvent registrationEvent
     List<String> labels = []
@@ -50,6 +51,14 @@ class Request implements Serializable{
 
     private void addIsPrereleaseAsParameter(String nameOverwrite=null){
         requestedParameters.put(PipelineParameters.IS_PRERELEASE, nameOverwrite)
+    }
+
+    private void addWhoAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.WHO, nameOverwrite)
+    }
+
+    private void addPrUrlAsParameter(String nameOverwrite=null){
+        requestedParameters.put(PipelineParameters.PR_URL, nameOverwrite)
     }
 
     static PushBuilder forPushes(){
@@ -136,6 +145,16 @@ class Request implements Serializable{
 
         LabelBuilder addShaAsParameter(String nameOverwrite=null){
             getRequest().addShaAsParameter(nameOverwrite)
+            return this
+        }
+
+        LabelBuilder addWhoAsParameter(String nameOverwrite=null){
+            getRequest().addWhoAsParameter(nameOverwrite)
+            return this
+        }
+
+        LabelBuilder addPrUrlAsParameter(String nameOverwrite=null){
+            getRequest().addPrUrlAsParameter(nameOverwrite)
             return this
         }
     }
